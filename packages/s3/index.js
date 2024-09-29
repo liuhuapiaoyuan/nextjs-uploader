@@ -1,0 +1,1 @@
+console.log("this is s3 adapter")

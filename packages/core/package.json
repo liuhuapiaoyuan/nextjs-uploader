@@ -1,0 +1,29 @@
+{
+  "name": "@nextjs-uploader/core",
+  "version": "0.0.1",
+  "description": "NextJS Uploader Core",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nextjs-uploader/nextjs-uploader.git"
+  },
+  "keywords": [
+    "nextjs",
+    "uploader",
+    "core"
+  ],
+  "author": "NextJS Uploader Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nextjs-uploader/nextjs-uploader/issues"
+  },
+  "homepage": "https://github.com/nextjs-uploader/nextjs-uploader#readme",
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
