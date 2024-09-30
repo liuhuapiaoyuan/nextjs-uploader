@@ -2,7 +2,7 @@
   "name": "nextjs-uploader",
   "version": "1.0.0",
   "description": "NextJS file uploader component", 
-  "workspaces": ["packages/*"],
+  "workspaces": ["packages/*","app/example"],
   "scripts": {
     "build": "tsc",
     "dev": "bun --filter '*' dev",

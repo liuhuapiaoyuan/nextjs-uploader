@@ -5,25 +5,32 @@
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-      "dev": "node index.js",
-      "test": "echo \"Error: no test specified\" && exit 1"
+        "dev": "tsc --watch",
+        "build": "tsc",
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
-      "type": "git",
-      "url": "git+https://github.com/nextjs-uploader/nextjs-uploader.git"
+        "type": "git",
+        "url": "git+https://github.com/nextjs-uploader/nextjs-uploader.git"
     },
     "keywords": [
-      "nextjs",
-      "uploader",
-      "core"
+        "nextjs",
+        "uploader",
+        "core"
     ],
     "author": "NextJS Uploader Team",
     "license": "MIT",
     "bugs": {
-      "url": "https://github.com/nextjs-uploader/nextjs-uploader/issues"
+        "url": "https://github.com/nextjs-uploader/nextjs-uploader/issues"
     },
     "homepage": "https://github.com/nextjs-uploader/nextjs-uploader#readme",
     "peerDependencies": {
-      "typescript": "^5.0.0"
+        "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "@aws-sdk/client-s3": "^3.658.1",
+        "@aws-sdk/s3-presigned-post": "^3.658.1",
+        "@aws-sdk/s3-request-presigner": "^3.658.1",
+        "@nextjs-uploader/share": "workspace:*"
     }
-  }
+}
