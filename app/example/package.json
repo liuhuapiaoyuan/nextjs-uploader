@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-demo",
+  "name": "@nextjs-uploader/example",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,11 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "react": "rc",
-    "react-dom": "rc",
-    "next": "canary",
     "@nextjs-uploader/core": "workspace:*",
-    "@nextjs-uploader/s3-adapter": "workspace:*"
+    "@nextjs-uploader/s3-adapter": "workspace:*",
+    "next": "v15.0.0-canary.176",
+    "react": "rc",
+    "react-dom": "rc"
   },
   "devDependencies": {
     "typescript": "^5",
