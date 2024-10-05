@@ -50,7 +50,7 @@ export class S3UploaderProvider implements UploaderProvider {
             //     Key: fileName ,
             //     Expires:new Date(Date.now() + 60 * 1000)
             // }));
-            //return { url: signedUrl , fields:{} };
+            // return { url: signedUrl , fields:{} };
             const { url, fields } = await createPresignedPost(s3Client, params);
             return { url, fields };
         } catch (error) {

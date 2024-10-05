@@ -39,9 +39,10 @@ export function UploadFileCard({
   onRetry,
   onRemove,
 }: UploadFileCardProps) {
+  const percent = (progress??0)*100 / (size??1);
   return (
     <div className="p-4 border rounded-xl ">
-      <div className=" flex gap-4 mb-4">
+      <div className=" flex gap-4">
         {/* icon */}
         <FileIcon className="w-8" />
         {/* info */}
@@ -50,16 +51,22 @@ export function UploadFileCard({
           <div className="text-sm">
             <span>{fileName ?? "Unknown"}</span>
           </div>
-          {size && (
+          {size && status==='uploading' && (
             <div className="flex items-center gap-2 ">
               <span>
-                {size} / {progress}
+                {progress} / {size}
               </span>
               <span>·</span>
               <LoadingIcon className="w-3 animate-spin" />
               <span>上传中...</span>
             </div>
           )}
+          {
+            status==='error' && ( <div className="text-red-500">上传失败</div> )
+          }
+          {
+            status==='done' && ( <div className="text-green-500">☑️</div> )
+          }
         </div>
         <div>
           <CloseIcon
@@ -69,12 +76,12 @@ export function UploadFileCard({
         </div>
       </div>
       {/* 进度条 */}
-      <div className="h-1 bg-gray-200 rounded-md">
+     {status==="uploading" && <div className="h-1 bg-gray-200 rounded-md mt-4">
         <div
           className="h-full bg-blue-500 rounded-md"
-          style={{ width: "50%" }}
+          style={{ width: `${percent.toFixed(2)}%` }}
         ></div>
-      </div>
+      </div>}
     </div>
   );
 }

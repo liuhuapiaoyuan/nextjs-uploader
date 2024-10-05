@@ -1,4 +1,5 @@
 "use client";
+import { uploadFile } from "@/lib/upload";
 import {
   createContext,
   PropsWithChildren,
@@ -10,8 +11,8 @@ import {
 export type UploadFileStatus = "uploading" | "done" | "error";
 
 function generateId() {
-  const time = Date.now()
-  return time +"_" + Math.random().toString(36).substr(2, 9);
+  const time = Date.now();
+  return time + "_" + Math.random().toString(36).substr(2, 9);
 }
 
 export type UploadFile = {
@@ -21,14 +22,14 @@ export type UploadFile = {
   progress?: number;
   url: string;
   error?: string;
-  id:string
+  id: string;
 };
 
 export interface IUploadContext {
   upload: (file: File) => void;
   cancelUpload: (index: number) => void;
   remove: (index: number) => void;
-  resort: (ids:string[]) => void;
+  resort: (ids: string[]) => void;
   uploads: UploadFile[];
   maxCount?: number;
   accept?: string;
@@ -39,7 +40,7 @@ export const UploadContext = createContext<IUploadContext>({
   upload: () => {},
   cancelUpload: () => {},
   remove: () => {},
-  resort: () =>{},
+  resort: () => {},
   uploads: [],
 });
 
@@ -52,45 +53,69 @@ export const useUploadContext = () => {
 };
 export type Action =
   | { type: "add"; payload: UploadFile }
-  | { type: "update"; payload: UploadFile; index: number }
+  | { type: "update"; payload: Partial<UploadFile>; id: string }
+  | { type: "updateByIndex"; payload: Partial<UploadFile>; index: number }
   | { type: "remove"; index: number }
-  | { type: "resort"; ids:string[] };
+  | { type: "resort"; ids: string[] };
 
 function reducer(state: UploadFile[], action: Action) {
   switch (action.type) {
     case "add":
       return [...state, action.payload];
+    case "updateByIndex":
+      return state.map((file, index) => {
+        if (index === action.index) {
+          return { ...file, ...action.payload };
+        }
+        return file;
+      });
     case "update":
-      return state.map((file, fileIndex) =>
-        fileIndex === action.index ? { ...file, ...action.payload,id:file.id } : file
-      );
+      return state.map((file) => {
+        if (file.id === action.id) {
+          return { ...file, ...action.payload };
+        }
+        return file;
+      });
     case "remove":
       return state.filter((_, index) => index !== action.index);
     case "resort":
       const ids = action.ids;
-      console.log("新顺序",ids)
-      return state.map((file) => {
-        const index = ids.indexOf(file.id);
-        return {...file, index };
-      }).sort((a, b) => a.index - b.index).map((file) => {
-        const { index,...rest } = file;
-        return rest;
-      });
+      return state
+        .map((file) => {
+          const index = ids.indexOf(file.id);
+          return { ...file, index };
+        })
+        .sort((a, b) => a.index - b.index)
+        .map((file) => {
+          const { index, ...rest } = file;
+          return rest;
+        });
     default:
       throw new Error();
   }
 }
 
-export function UploadContainer(
-  props: PropsWithChildren<{
-    files?: UploadFile[];
-    maxCount?: number;
-    accept?: string;
-    multiple?: boolean;
-    onError?: (error: Error) => void;
-  }>
-) {
-  const { onError, files, maxCount = 10, accept, multiple } = props;
+export type UploadContainerType = PropsWithChildren<{
+  files?: UploadFile[];
+  maxCount?: number;
+  accept?: string;
+  multiple?: boolean;
+  onError?: (error: Error) => void;
+  fileUploadService?: (
+    file: File,
+    onProgress: (progress: { loaded: number; total: number }) => void
+  ) => Promise<string>;
+}>;
+
+export function UploadContainer(props: UploadContainerType) {
+  const {
+    onError,
+    fileUploadService,
+    files,
+    maxCount = 10,
+    accept,
+    multiple,
+  } = props;
   // 单图模式，会自动替换
   const isSingle = maxCount == 1;
   const [uploads, dispatch] = useReducer(reducer, files || []);
@@ -111,20 +136,51 @@ export function UploadContainer(
         size: file.size,
         progress: 0,
         url,
-        id: generateId()
+        id: generateId(),
       };
-      if (isSingle && uploads.length!=0) {
-        dispatch({ type: "update", index: 0, payload: newUpload });
+      if (isSingle && uploads.length != 0) {
+        newUpload.id = uploads[0].id;
+        dispatch({ type: "update", id: newUpload.id, payload: newUpload });
       } else {
         dispatch({ type: "add", payload: newUpload });
       }
+
+      // 开始上传
+      fileUploadService?.(file, (progress) => {
+        dispatch({
+          type: "update",
+          id: newUpload.id,
+          payload: {
+            status: "uploading",
+            progress: progress.loaded,
+            size: progress.total,
+          },
+        });
+      }).then(()=>{
+        dispatch({
+          type: "update",
+          id: newUpload.id,
+          payload: {
+            status: "done",
+          },
+        });
+      }).catch(error=>{
+        dispatch({
+          type: "update",
+          id: newUpload.id,
+          payload: {
+            status: "error",
+            error: error.message,
+          },
+        });
+      })
     };
   };
 
   const cancelUpload = (index: number) => {
     dispatch({ type: "remove", index: isSingle ? 0 : index });
   };
-  const resort = useCallback((ids:string[]) => {
+  const resort = useCallback((ids: string[]) => {
     dispatch({ type: "resort", ids });
   }, []);
   return (
@@ -146,3 +202,4 @@ export function UploadContainer(
     </UploadContext.Provider>
   );
 }
+ 

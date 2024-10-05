@@ -2,7 +2,7 @@
 import { useState, DOMAttributes, InputHTMLAttributes } from "react";
 import { useUploadContext } from "./upload-context";
 
-export function useFileHandler() {
+export function useFileHandler(fileRef: React.RefObject<HTMLInputElement>) {
   const { upload } = useUploadContext();
   const [isDragging, setIsDragging] = useState(false);
 
@@ -20,11 +20,17 @@ export function useFileHandler() {
     droppedFiles.forEach((file) => {
       upload(file);
     });
+    if (fileRef.current) {
+      fileRef.current.value = "";
+    }
   };
   const handleDragEnd: DOMAttributes<HTMLDivElement>["onDragEnd"] = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
+    if (fileRef.current) {
+      fileRef.current.value = "";
+    }
   };
 
   const handleFileChange: InputHTMLAttributes<HTMLInputElement>["onChange"] = (
@@ -36,6 +42,15 @@ export function useFileHandler() {
         upload(file);
       }
     }
+    if (fileRef.current) {
+      fileRef.current.value = "";
+    }
   };
-  return { isDragging,handleDragEnd, handleDragOver, handleDrop, handleFileChange };
+  return {
+    isDragging,
+    handleDragEnd,
+    handleDragOver,
+    handleDrop,
+    handleFileChange,
+  };
 }

@@ -100,39 +100,63 @@ export function UploadFileCard({
   );
 }
 
-export function UploadAvatarHandler(props: Omit<HTMLAttributes<HTMLDivElement>,"onDragOver"|"onDrop">) {
-  const { uploads,  accept = "images/*" } = useUploadContext();
+export function UploadAvatarPreview(){
+  const { uploads } = useUploadContext();
   const file = uploads?.[0];
-  const { isDragging, handleDragOver,handleDragEnd, handleDrop, handleFileChange } =
-    useFileHandler();
+  return  <div
+  style={
+    file?.url
+      ? {
+          backgroundImage: `url(${file?.url})`,
+        }
+      : {}
+  }
+  className="w-full h-full bg-contain rounded-xl absolute z-10"
+></div>
+}
+
+export function UploadAvatarHandler(
+  props: Omit<HTMLAttributes<HTMLDivElement>, "onDragOver" | "onDrop">
+) {
+  const { uploads, accept = "images/*" } = useUploadContext();
+  const file = uploads?.[0];
+  const { className , children, ...rest } = props;
+  const {
+    isDragging,
+    handleDragOver,
+    handleDragEnd,
+    handleDrop,
+    handleFileChange,
+  } = useFileHandler();
   return (
     <div
-      className='border hover:bg-gray-50 bg-white data-[dragging=true]:bg-gray-100 group cursor-pointer border-dashed  gap-3 rounded-xl overflow-hidden   h-20 w-20'
+      className={`${
+        className ?? ""
+      } border hover:bg-gray-50 relative bg-white data-[dragging=true]:bg-gray-100 group cursor-pointer border-dashed  gap-3 rounded-xl overflow-hidden   h-20 w-20 `}
       data-dragging={isDragging}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
       onDragExit={handleDragEnd}
       onDragLeave={handleDragEnd}
-      {...props}
+      {...rest}
     >
-      <label
-        style={
-          file?.url
-            ? {
-                backgroundImage: `url(${file?.url})`,
-              }
-            : {}
-        }
-        className="w-full relative cursor-pointer block  h-full  bg-contain"
-      >
+     
+      {children}
+      <label className="w-full relative cursor-pointer block z-20 h-full  bg-contain">
         <input
           accept={accept}
           type="file"
           onChange={handleFileChange}
           className="hidden"
         />
-        <div className={` rounded-xl flex items-center justify-center absolute inset-0 ${file?"hidden bg-black bg-opacity-25 group-hover:flex group-data-[dragging=true]:flex":""}`}>
-          <UploadImageIcon className={file?'text-white':"text-gray-500"} />
+        <div
+          className={` rounded-xl flex items-center justify-center absolute inset-0 ${
+            file
+              ? "hidden bg-black bg-opacity-25 group-hover:flex group-data-[dragging=true]:flex"
+              : ""
+          }`}
+        >
+          <UploadImageIcon className={file ? "text-white" : "text-gray-500"} />
         </div>
       </label>
     </div>
