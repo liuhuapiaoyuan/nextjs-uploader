@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { CloseIcon, FileIcon, LoadingIcon } from "./icons";
 import { UploadFileStatus, useUploadContext } from "./upload-context";
+import { SortableProvider, useSortable } from "use-sortablejs";
 
 export interface UploadFileCardProps {
   // 增加 状态（错误|成功|上传中） ， 文件名称，图标，大小，已上传大小
@@ -79,28 +80,45 @@ export function UploadFileCard({
 }
 function UploadFileListInner() {
   const { uploads, resort, cancelUpload } = useUploadContext();
-
+  const setItems: Dispatch<SetStateAction<string[]>> = (newValue) => {
+    if (typeof newValue === "function") {
+      resort(newValue(uploads.map((z) => z.id)));
+    } else {
+      resort(newValue);
+    }
+  };
+  const { getRootProps, getItemProps } = useSortable({
+    setItems,
+    options: {
+      animation: 150,
+      onSort() {},
+    },
+  });
 
   return (
-    <div className="grid  gap-2">
-      {uploads.map((upload, index) => (
-        <div key={upload.id}>
-          <UploadFileCard
-            key={index}
-            status={upload.status}
-            fileName={upload.name}
-            icon={upload.icon}
-            size={upload.size}
-            onCancel={() => cancelUpload(index)}
-            progress={upload.progress}
-          />
-        </div>
-      ))}
-    </div>
+    <>
+      <div className="grid  gap-2" {...getRootProps()}>
+        {uploads.map((upload, index) => (
+          <div key={upload.id} {...getItemProps(upload.id)}>
+            <UploadFileCard
+              status={upload.status}
+              fileName={upload.name}
+              icon={upload.icon}
+              size={upload.size}
+              onCancel={() => cancelUpload(index)}
+              progress={upload.progress}
+            />
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
+
 export function UploadFileList() {
   return (
+    <SortableProvider>
       <UploadFileListInner />
+    </SortableProvider>
   );
 }

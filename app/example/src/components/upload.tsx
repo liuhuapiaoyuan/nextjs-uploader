@@ -18,10 +18,9 @@ export function Upload() {
 export function UploadImages() {
   return (
     <UploadContainer>
-      <div className="flex flex-wrap gap-2">
-        <UploadImageList />
-        <UploadImageButton />
-      </div>
+      <UploadImageList  className="flex flex-wrap gap-2">
+        <UploadImageButton multiple />
+      </UploadImageList>
     </UploadContainer>
   );
 }

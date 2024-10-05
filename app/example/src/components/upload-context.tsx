@@ -2,6 +2,7 @@
 import {
   createContext,
   PropsWithChildren,
+  useCallback,
   useContext,
   useReducer,
 } from "react";
@@ -67,6 +68,7 @@ function reducer(state: UploadFile[], action: Action) {
       return state.filter((_, index) => index !== action.index);
     case "resort":
       const ids = action.ids;
+      console.log("新顺序",ids)
       return state.map((file) => {
         const index = ids.indexOf(file.id);
         return {...file, index };
@@ -122,14 +124,14 @@ export function UploadContainer(
   const cancelUpload = (index: number) => {
     dispatch({ type: "remove", index: isSingle ? 0 : index });
   };
-
+  const resort = useCallback((ids:string[]) => {
+    dispatch({ type: "resort", ids });
+  }, []);
   return (
     <UploadContext.Provider
       value={{
         upload,
-        resort(ids) {
-          dispatch({ type: "resort", ids });
-        },
+        resort,
         maxCount,
         accept,
         multiple,

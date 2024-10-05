@@ -1,6 +1,8 @@
+import { SortableProvider, useSortable } from "use-sortablejs";
 import { CloseIcon, FileIcon, LoadingIcon, UploadIcon } from "./icons";
 import { UploadFileStatus, useUploadContext } from "./upload-context";
 import { UploadImageButton } from "./upload-file-handers";
+import { Dispatch, DOMAttributes, HTMLAttributes, SetStateAction } from "react";
 
 export interface UploadFileCardProps {
   // 增加 状态（错误|成功|上传中） ， 文件名称，图标，大小，已上传大小
@@ -91,21 +93,45 @@ export function UploadFileCard({
     </div>
   );
 }
-
-export function UploadImageList() {
-  const { uploads, cancelUpload, remove } = useUploadContext();
-  return  uploads.map((upload, index) => (
-    <UploadFileCard
-      key={index}
-      status={upload.status}
-      fileName={upload.name}
-      icon={upload.url}
-      size={upload.size}
-      onCancel={() => cancelUpload(index)}
-      onRemove={() => remove(index)}
-      progress={upload.progress}
-    />
-  ))
-   
-  
+function UploadImageSortableList(props:HTMLAttributes<HTMLDivElement>) {
+  const { uploads, resort, remove, cancelUpload } = useUploadContext();
+  const setItems: Dispatch<SetStateAction<string[]>> = (newValue) => {
+    if (typeof newValue === "function") {
+      resort(newValue(uploads.map((z) => z.id)));
+    } else {
+      resort(newValue);
+    }
+  };
+  const { getRootProps, getItemProps } = useSortable({
+    setItems,
+    options: {
+      animation: 150,
+      onSort() {},
+    },
+  });
+  return (
+    <div {...props} {...getRootProps()} >
+      {uploads.map((upload, index) => (
+        <div key={upload.id} {...getItemProps(upload.id)}>
+          <UploadFileCard
+            status={upload.status}
+            fileName={upload.name}
+            icon={upload.url}
+            size={upload.size}
+            onCancel={() => cancelUpload(index)}
+            onRemove={() => remove(index)}
+            progress={upload.progress}
+          />
+        </div>
+      ))}
+      {props.children}
+    </div>
+  );
+}
+export function UploadImageList(props:HTMLAttributes<HTMLDivElement>) {
+  return (
+    <SortableProvider>
+      <UploadImageSortableList {...props} />
+    </SortableProvider>
+  );
 }
