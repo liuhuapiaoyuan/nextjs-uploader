@@ -1,14 +1,16 @@
 {
   "name": "nextjs-uploader",
   "version": "1.0.0",
-  "description": "NextJS file uploader component", 
-  "workspaces": ["packages/*","app/example"],
+  "description": "NextJS file uploader component",
+  "workspaces": [
+    "packages/*",
+    "app/example"
+  ],
   "scripts": {
-    "build": "tsc",
     "dev": "bun --filter '*' dev",
-    "dev:core": "bun  --filter '@nextjs-uploader/core'  dev",
     "dev:app": "bun  --filter '@nextjs-uploader/example'  dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "release:s3": "bun run --filter '@nextjs-uploader/s3' release ",
+    "release:react": "bun run --filter '@nextjs-uploader/react' release "
   },
   "repository": {
     "type": "git",
@@ -21,9 +23,12 @@
     "upload"
   ],
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "prettier": "3.3.3",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.6.2"
   }
 }

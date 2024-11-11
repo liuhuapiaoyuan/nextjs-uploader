@@ -122,6 +122,7 @@ export function UploadAvatarHandler(
   const file = uploads?.[0];
   const { className , children, ...rest } = props;
   const {
+    fileRef,
     isDragging,
     handleDragOver,
     handleDragEnd,
@@ -143,7 +144,7 @@ export function UploadAvatarHandler(
      
       {children}
       <label className="w-full relative cursor-pointer block z-20 h-full  bg-contain">
-        <input
+        <input ref={fileRef}
           accept={accept}
           type="file"
           onChange={handleFileChange}

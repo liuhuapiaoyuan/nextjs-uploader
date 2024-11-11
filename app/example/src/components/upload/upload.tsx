@@ -24,9 +24,9 @@ export function UploadImages(props:UploadContainerType) {
     </UploadContainer>
   );
 }
-export function UploadAvatar() {
+export function UploadAvatar(props:UploadContainerType) {
   return (
-    <UploadContainer multiple={false} maxCount={1}>
+    <UploadContainer multiple={false} maxCount={1}  {...props}>
       <UploadAvatarHandler>
         <UploadAvatarPreview/>
       </UploadAvatarHandler>

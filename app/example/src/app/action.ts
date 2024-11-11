@@ -1,9 +1,13 @@
 'use server'
 
-import { createUploaderAction } from "@nextjs-uploader/core";
-import { S3UploaderProvider } from "@nextjs-uploader/s3-adapter";
+import { S3UploaderProvider } from '@nextjs-uploader/s3'
 
-const { getSignedUrl,uploadFile } = createUploaderAction(new S3UploaderProvider());
+const s3Uploader = (function () {
+  const provider = new S3UploaderProvider()
+  return {
+    getSignedUrl: provider.getSignedUrl.bind(provider),
+    uploadFile: provider.uploadFile.bind(provider),
+  }
+})()
 
-
-export { getSignedUrl,uploadFile}
+export const { getSignedUrl, uploadFile } = s3Uploader
