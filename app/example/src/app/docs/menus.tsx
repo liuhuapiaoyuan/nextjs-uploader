@@ -17,8 +17,7 @@ export const MenuGroups: MenuGroupType[] = [
     items: [
       {
         title: 'Installation',
-        url: '#',
-        icon: <Cpu />,
+        url: '/docs/install',
       },
     ],
   },
