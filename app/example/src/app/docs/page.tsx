@@ -1,9 +1,7 @@
 'use client'
-import { AvatarChoose } from '@/components/AvatarChoose'
-import { UploadImages, UploadAvatar, Upload } from '@/components/upload/upload'
-import { UploadButton } from '@/components/upload/upload-button'
+import { Upload } from '@/components/upload/upload'
 import { uploadFile } from '@/lib/upload'
-import { getSignedUrl, uploadFile as uploadFileAction } from '../action'
+import { getSignedUrl } from '../action'
 function generateId() {
   return (
     Date.now() +
@@ -43,32 +41,6 @@ export default function Page() {
           <Upload fileUploadService={fileUploadService} />
         </div>
       </div>
-      <div className='mt-2'>
-        <h2>图片列表</h2>
-        <div className='p-5'>
-          <UploadImages fileUploadService={fileUploadService} />
-        </div>
-      </div>
-      <div className='mt-2'>
-        <h2>头像上传</h2>
-        <div className='p-5'>
-          <UploadAvatar />
-        </div>
-      </div>
-      <div className='mt-2'>
-        <h2>头像上传2</h2>
-        <div className='p-5'>
-          <AvatarChoose />
-        </div>
-      </div>
-      <h1>上传组件案例</h1>
-      <UploadButton
-        uploadFile={async (file) => {
-          const fileKey = 'temp/' + file.name
-          await uploadFileAction(file, fileKey)
-          return 'https://cdn.kedao.ggss.club/' + fileKey
-        }}
-      />
     </div>
   )
 }

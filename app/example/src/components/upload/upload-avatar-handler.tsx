@@ -1,38 +1,39 @@
-import { HTMLAttributes } from "react";
+import { HTMLAttributes } from 'react'
 import {
   CloseIcon,
   FileIcon,
   LoadingIcon,
   UploadIcon,
   UploadImageIcon,
-} from "./icons";
-import { UploadFileStatus, useUploadContext } from "./upload-context";
-import { UploadImageButton } from "./upload-file-handers";
-import { useFileHandler } from "./useFileHandler";
+} from './icons'
+import { UploadFileStatus, useUploadContext } from './upload-context'
+import { UploadImageButton } from './upload-file-handers'
+import { useFileHandler } from './useFileHandler'
+import { cn } from '@/lib/utils'
 
 export interface UploadFileCardProps {
   // 增加 状态（错误|成功|上传中） ， 文件名称，图标，大小，已上传大小
-  status: UploadFileStatus;
+  status: UploadFileStatus
   /**
    * 文件名称
    */
-  fileName?: string;
+  fileName?: string
   /**
    * 图标
    */
-  icon?: any;
+  icon?: any
   /**
    * 文件大小
    */
-  size?: number;
+  size?: number
   /**
    * 上传尺寸
    */
-  progress?: number;
+  progress?: number
 
-  onCancel?: () => void;
-  onRetry?: () => void;
-  onRemove?: () => void;
+  onCancel?: () => void
+  onRetry?: () => void
+  onRemove?: () => void
 }
 
 // https://www.alignui.com/components-detail/file-upload
@@ -46,81 +47,83 @@ export function UploadFileCard({
   onRetry,
   onRemove,
 }: UploadFileCardProps) {
-  const percent = ((progress ?? 0) * 100) / (size ?? 1);
+  const percent = ((progress ?? 0) * 100) / (size ?? 1)
   return (
-    <div className="grid gap-2 w-20">
-      <div className="border rounded-xl w-20 h-20 relative">
+    <div className='grid gap-2 w-20'>
+      <div className='border rounded-xl w-20 h-20 relative'>
         <div
-          className="w-full h-full bg-contain rounded-xl"
+          className='w-full h-full bg-contain rounded-xl'
           style={
             icon && {
               backgroundImage: `url(${icon})`,
             }
           }
         ></div>
-        <div className="absolute z-20 right-0 top-0 p-2">
+        <div className='absolute z-20 right-0 top-0 p-2'>
           {/* 已经上传，显示删除 */}
-          {status === "done" && (
+          {status === 'done' && (
             <CloseIcon
               onClick={onRemove}
-              className="w-5 h-5 cursor-pointer text-red-700  rounded-full hover:text-red-500"
+              className='w-5 h-5 cursor-pointer text-red-700  rounded-full hover:text-red-500'
             />
           )}
           {/* 上传失败，显示重试 */}
-          {status === "error" && (
+          {status === 'error' && (
             <CloseIcon
               onClick={onRetry}
-              className="w-5 h-5 cursor-pointer text-red-700  rounded-full hover:text-red-500"
+              className='w-5 h-5 cursor-pointer text-red-700  rounded-full hover:text-red-500'
             />
           )}
           {/* 上传中，显示上传进度 */}
-          {status === "uploading" && (
+          {status === 'uploading' && (
             <CloseIcon
               onClick={onCancel}
-              className="w-5 h-5 cursor-pointer text-red-700  rounded-full hover:text-red-500"
+              className='w-5 h-5 cursor-pointer text-red-700  rounded-full hover:text-red-500'
             />
           )}
         </div>
         {/* 背景图 */}
-        {status === "uploading" && percent > 0 && (
-          <div className="absolute inset-0 z-10  flex items-center justify-center rounded-xl bg-gray-500 bg-opacity-50">
+        {status === 'uploading' && percent > 0 && (
+          <div className='absolute inset-0 z-10  flex items-center justify-center rounded-xl bg-gray-500 bg-opacity-50'>
             <LoadingIcon
-              className="size-3 animate-spin text-white"
-              stroke="white"
+              className='size-3 animate-spin text-white'
+              stroke='white'
             />
-            <span className="text-white text-sm">{percent.toFixed(1)}%</span>
+            <span className='text-white text-sm'>{percent.toFixed(1)}%</span>
           </div>
         )}
       </div>
       {/* file title */}
-      <div className=" text-sm break-words overflow-hidden">
-        <span>{fileName ?? "Unknown"}</span>
+      <div className=' text-sm break-words overflow-hidden'>
+        <span>{fileName ?? 'Unknown'}</span>
       </div>
     </div>
-  );
+  )
 }
 
-export function UploadAvatarPreview(){
-  const { uploads } = useUploadContext();
-  const file = uploads?.[0];
-  return  <div
-  style={
-    file?.url
-      ? {
-          backgroundImage: `url(${file?.url})`,
-        }
-      : {}
-  }
-  className="w-full h-full bg-contain rounded-xl absolute z-10"
-></div>
+export function UploadAvatarPreview() {
+  const { uploads } = useUploadContext()
+  const file = uploads?.[0]
+  return (
+    <div
+      style={
+        file?.url
+          ? {
+              backgroundImage: `url(${file?.url})`,
+            }
+          : {}
+      }
+      className='w-full h-full bg-contain rounded-xl absolute z-10'
+    ></div>
+  )
 }
 
 export function UploadAvatarHandler(
-  props: Omit<HTMLAttributes<HTMLDivElement>, "onDragOver" | "onDrop">
+  props: Omit<HTMLAttributes<HTMLDivElement>, 'onDragOver' | 'onDrop'>,
 ) {
-  const { uploads, accept = "images/*" } = useUploadContext();
-  const file = uploads?.[0];
-  const { className , children, ...rest } = props;
+  const { uploads, accept = 'images/*' } = useUploadContext()
+  const file = uploads?.[0]
+  const { className, children, ...rest } = props
   const {
     fileRef,
     isDragging,
@@ -128,12 +131,13 @@ export function UploadAvatarHandler(
     handleDragEnd,
     handleDrop,
     handleFileChange,
-  } = useFileHandler();
+  } = useFileHandler()
   return (
     <div
-      className={`${
-        className ?? ""
-      } border hover:bg-gray-50 relative bg-white data-[dragging=true]:bg-gray-100 group cursor-pointer border-dashed  gap-3 rounded-xl overflow-hidden   h-20 w-20 `}
+      className={cn(
+        'border hover:bg-gray-50 relative bg-white data-[dragging=true]:bg-gray-100 group cursor-pointer border-dashed  gap-3 rounded-xl overflow-hidden   h-20 w-20',
+        className,
+      )}
       data-dragging={isDragging}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
@@ -141,25 +145,25 @@ export function UploadAvatarHandler(
       onDragLeave={handleDragEnd}
       {...rest}
     >
-     
       {children}
-      <label className="w-full relative cursor-pointer block z-20 h-full  bg-contain">
-        <input ref={fileRef}
+      <label className='w-full relative cursor-pointer block z-20 h-full  bg-contain'>
+        <input
+          ref={fileRef}
           accept={accept}
-          type="file"
+          type='file'
           onChange={handleFileChange}
-          className="hidden"
+          className='hidden'
         />
         <div
           className={` rounded-xl flex items-center justify-center absolute inset-0 ${
             file
-              ? "hidden bg-black bg-opacity-25 group-hover:flex group-data-[dragging=true]:flex"
-              : ""
+              ? 'hidden bg-black bg-opacity-25 group-hover:flex group-data-[dragging=true]:flex'
+              : ''
           }`}
         >
-          <UploadImageIcon className={file ? "text-white" : "text-gray-500"} />
+          <UploadImageIcon className={file ? 'text-white' : 'text-gray-500'} />
         </div>
       </label>
     </div>
-  );
+  )
 }

@@ -74,7 +74,11 @@ const config: Config = {
       },
     },
   },
-  plugins: [tailwindcssAnimate, addVariablesForColors],
+  plugins: [
+    tailwindcssAnimate,
+    addVariablesForColors,
+    require('@tailwindcss/typography'),
+  ],
 }
 
 function addVariablesForColors({ addBase, theme }: any) {

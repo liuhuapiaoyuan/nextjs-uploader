@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "dev": "bun --filter '*' dev",
-    "dev:app": "bun  --filter '{@nextjs-uploader/example,@nextjs-uploader/s3}'  dev",
+    "dev:app": "bun  --filter @nextjs-uploader/example  dev",
     "release:s3": "bun run --filter '@nextjs-uploader/s3' release ",
     "release:react": "bun run --filter '@nextjs-uploader/react' release "
   },
