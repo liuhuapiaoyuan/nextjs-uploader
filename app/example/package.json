@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@formkit/drag-and-drop": "^0.2.5",
     "@mdx-js/react": "^3.1.0",
     "@next/mdx": "^15.0.3",
     "@nextjs-uploader/s3": "workspace:*",
@@ -29,11 +30,10 @@
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
-    "tailwind-merge": "^2.5.4",
     "rehype-highlight": "^7.0.1",
     "remark-gfm": "^4.0.0",
-    "tailwindcss-animate": "^1.0.7",
-    "use-sortablejs": "^1.1.7"
+    "tailwind-merge": "^2.5.4",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@mdx-js/loader": "^3.1.0",

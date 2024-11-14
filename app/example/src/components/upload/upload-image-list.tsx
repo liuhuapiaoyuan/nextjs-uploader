@@ -1,7 +1,7 @@
-import { SortableProvider, useSortable } from 'use-sortablejs'
 import { CloseIcon, LoadingIcon } from './icons'
 import { UploadFileStatus, useUploadContext } from './upload-context'
-import { Dispatch, HTMLAttributes, SetStateAction } from 'react'
+import { HTMLAttributes } from 'react'
+import { SortableList } from './sortable-list'
 
 export interface UploadFileCardProps {
   // 增加 状态（错误|成功|上传中） ， 文件名称，图标，大小，已上传大小
@@ -92,27 +92,15 @@ export function UploadFileCard({
     </div>
   )
 }
-function UploadImageSortableList(props: HTMLAttributes<HTMLDivElement>) {
+export function UploadImageList(props: HTMLAttributes<HTMLDivElement>) {
   const { uploads, resort, remove, cancelUpload } = useUploadContext()
-  const setItems: Dispatch<SetStateAction<string[]>> = (newValue) => {
-    if (typeof newValue === 'function') {
-      resort(newValue(uploads.map((z) => z.id)))
-    } else {
-      resort(newValue)
-    }
-  }
-  const { getRootProps, getItemProps } = useSortable({
-    setItems,
-    options: {
-      animation: 150,
-      onSort() {},
-    },
-  })
   return (
-    <div {...props} {...getRootProps()}>
-      {uploads.map((upload, index) => (
-        <div key={upload.id} {...getItemProps(upload.id)}>
+    <SortableList
+      onChange={(newList) => resort(newList.map((z) => z.id))}
+      renderItem={(upload, index) => {
+        return (
           <UploadFileCard
+            key={upload.id}
             status={upload.status}
             fileName={upload.name}
             icon={upload.url}
@@ -121,16 +109,12 @@ function UploadImageSortableList(props: HTMLAttributes<HTMLDivElement>) {
             onRemove={() => remove(index)}
             progress={upload.progress}
           />
-        </div>
-      ))}
-      {props.children}
-    </div>
-  )
-}
-export function UploadImageList(props: HTMLAttributes<HTMLDivElement>) {
-  return (
-    <SortableProvider>
-      <UploadImageSortableList {...props} />
-    </SortableProvider>
+        )
+      }}
+      value={uploads}
+    >
+      {/* not-drag */}
+      <div className='not-drag'>{props.children}</div>
+    </SortableList>
   )
 }

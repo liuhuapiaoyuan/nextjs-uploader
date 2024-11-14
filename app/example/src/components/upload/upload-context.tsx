@@ -82,10 +82,9 @@ function reducer(state: UploadFile[], action: Action) {
     case 'removeByIndex':
       return state.filter((_, index) => index !== action.index)
     case 'resort':
-      const ids = action.ids
       return state
         .map((file) => {
-          const index = ids.indexOf(file.id)
+          const index = action.ids.indexOf(file.id)
           return { ...file, index }
         })
         .sort((a, b) => a.index - b.index)

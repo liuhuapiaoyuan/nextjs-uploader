@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "pnpm --filter '*' dev",
     "dev:app": "pnpm  --filter @nextjs-uploader/example  dev",
-    "release:s3": "pnpm run --filter '@nextjs-uploader/s3' release ",
+    "release:s3": "pnpm run --filter @nextjs-uploader/s3 release ",
     "release:react": "pnpm run --filter '@nextjs-uploader/react' release "
   },
   "repository": {

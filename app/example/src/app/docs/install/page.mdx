@@ -1,8 +1,6 @@
 import { Upload } from '@/components/upload/upload'
 import { getSignedUrl } from '../../action'
 
-# 文档测试
-
 ### 安装
 
 ```
@@ -21,19 +19,10 @@ yarn add nextjs-uploader
 import { Uploader } from 'nextjs-uploader'
 
 function MyComponent() {
-  const handleUpload = (files) => {
-    console.log(files)
-  }
-
-  return (
-    <Uploader
-      multiple
-      accept='image/*'
-      maxSize={1024 * 1024 * 5}
-      onUpload={handleUpload}
-    />
-  )
+  return <Upload getSignedParams={getSignedUrl} />
 }
 ```
+
+### 效果
 
 <Upload getSignedParams={getSignedUrl} />

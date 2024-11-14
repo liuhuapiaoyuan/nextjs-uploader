@@ -11,6 +11,8 @@ export class S3EnvConfigProvider implements IS3CofnigProvider {
     const secretKey = process.env.S3_SECRET_ACCESS_KEY
     const endpoint = process.env.S3_ENDPOINT
     const region = process.env.S3_REGION
+    const provider = process.env.S3_PROVIDER ?? 'awz'
+    const cdn = process.env.S3_CDN ?? endpoint
 
     // 检查必要的环境变量是否存在
     if (!bucket || !accessKey || !secretKey) {
@@ -21,11 +23,13 @@ export class S3EnvConfigProvider implements IS3CofnigProvider {
 
     // 返回配置对象
     return {
+      cdn,
       bucket,
       accessKey,
       secretKey,
       endpoint,
       region,
+      provider,
     } as S3Cofnig
   }
 

@@ -1,14 +1,14 @@
 {
     "name": "@nextjs-uploader/s3",
-    "version": "0.0.3",
+    "version": "0.0.10",
     "description": "NextJS Uploader S3 Adapter",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
         "dev": "tsc --watch",
-        "build": "bun build ./src/index.ts  --target=node  --outdir=dist && tsc --declaration --emitDeclarationOnly",
+        "build": "tsc",
         "patch:version": "npm version patch",
-        "release": "bun run build && npm publish && npm version patch"
+        "release": "pnpm run  build && npm  publish && npm version patch"
     },
     "repository": {
         "type": "git",
@@ -30,7 +30,6 @@
     },
     "dependencies": {
         "@aws-sdk/client-s3": "^3.658.1",
-        "@aws-sdk/s3-presigned-post": "^3.658.1",
         "@aws-sdk/s3-request-presigner": "^3.658.1"
     },
     "publishConfig": {

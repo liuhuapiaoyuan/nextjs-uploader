@@ -26,11 +26,6 @@ export const MenuGroups: MenuGroupType[] = [
     icon: <ComponentIcon />,
     items: [
       {
-        title: '标准上传',
-        url: '/docs',
-        icon: <UploadCloud />,
-      },
-      {
         title: '图片列表',
         url: '/docs/image-list',
         icon: <Settings />,
