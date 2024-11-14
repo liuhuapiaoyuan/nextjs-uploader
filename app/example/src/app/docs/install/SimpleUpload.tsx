@@ -39,6 +39,7 @@ export function SimpleUpload() {
     <div>
       <Input
         type='file'
+        accept='.jpg,.jpeg,.png,.gif'
         onChange={(e) => {
           if (e.target?.files?.[0]) {
             e.preventDefault()

@@ -1,6 +1,18 @@
 import { SimpleUpload } from './SimpleUpload'
 
-### 安装
+# 🎉 Nextjs-Uploader
+
+一个基于 **Next.js 15** 和 **React 19** 的S3上传插件，旨在通过 `serverAction` 简化上传流程。
+
+## 🚀 特性
+
+- **单文件上传** 🗂️：支持简单的单文件上传。
+- **多文件上传** 📁：轻松选择和上传多个文件。
+- **S3 适配能力** ☁️：提供与 AWS S3 的无缝集成，便于文件存储。
+- **云存储适配**：华为云、腾讯云、阿里云、七牛云、又拍云等。
+- **TypeScript 支持** ☕️：提供完整的 TypeScript 类型定义文件。
+
+## 📦 安装
 
 ```
 npm install @nextjs-uploader/s3
@@ -73,7 +85,7 @@ const handleUpload = async (file: File) => {
 }
 ```
 
-#### 3. 在定义一个简单的组件来上传
+#### 5. 在定义一个简单的组件来上传
 
 ```typescript
 'use client'
@@ -96,19 +108,14 @@ export function SimpleUpload() {
   }
   return (
     <div>
-      <Input
-        type='file'
-        onChange={(e) => e.target?.files?.[0] && handleUpload(e.target.files[0]) }
-      />
+      <Input type='file' onChange={(e) => e.target?.files?.[0] && handleUpload(e.target.files[0]) } />
       <div>
         {state === 0 && '未上传'}
         {state === 1 && '上传中...'}
         {state === 2 && (
           <div>
-            上传成功：“”
-            <a target='_blank' href={link}>
-              {link}
-            </a>
+           上传成功：
+            <a target='_blank' href={link}> {link} </a>
           </div>
         )}
         {state === 3 && '上传失败'}
