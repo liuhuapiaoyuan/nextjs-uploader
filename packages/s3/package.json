@@ -1,6 +1,6 @@
 {
     "name": "@nextjs-uploader/s3",
-    "version": "0.0.10",
+    "version": "0.0.11",
     "description": "NextJS Uploader S3 Adapter",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",

@@ -1,11 +1,7 @@
 import type { IS3CofnigProvider } from './interface'
 import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3'
-import { createPresignedPost } from '@aws-sdk/s3-presigned-post'
 import { S3EnvConfigProvider } from './S3EnvConfigProvider'
 import { PresignedAdapterProviders } from './adapter'
-
-export * from './S3EnvConfigProvider'
-export * from './interface'
 
 function padZero(num: number, length: number = 2): string {
   return num.toString().padStart(length, '0')

@@ -1,12 +1,8 @@
 'use server'
 
-import { S3UploaderProvider } from '@nextjs-uploader/s3'
+import { createS3Uploader } from '@nextjs-uploader/s3'
 
-export async function getSignedUrl(fileName: string): Promise<{
-  url: string
-  formData: FormData
-  link: string
-}> {
-  const provider = new S3UploaderProvider()
+export async function getSignedUrl(fileName: string) {
+  const provider = createS3Uploader()
   return provider.getSignedUrl(provider.createKey(fileName))
 }

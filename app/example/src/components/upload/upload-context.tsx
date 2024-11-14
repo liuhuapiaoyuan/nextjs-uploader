@@ -20,6 +20,7 @@ export type UploadFile = {
   size?: number
   progress?: number
   url: string
+  type?: string
   error?: string
   id: string
   abort?: () => void
@@ -138,6 +139,7 @@ export function UploadContainer(props: UploadContainerType) {
         name: file.name,
         size: file.size,
         progress: 0,
+        type: file.type,
         url,
         id: generateId(),
       }

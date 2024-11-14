@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className='h-svh '>
+      <body className='min-h-svh '>
         <Header
           brand={{
             href: '/',

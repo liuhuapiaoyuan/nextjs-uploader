@@ -1,4 +1,4 @@
-import { UploadCloud, Inbox, Settings, ComponentIcon, Cpu } from 'lucide-react'
+import { User, Settings, ImageIcon, ComponentIcon, Upload } from 'lucide-react'
 import { ReactNode } from 'react'
 
 export type MenuGroupType = {
@@ -26,19 +26,35 @@ export const MenuGroups: MenuGroupType[] = [
     icon: <ComponentIcon />,
     items: [
       {
+        title: '文件列表',
+        url: '/docs/file-list',
+        icon: <ImageIcon />,
+      },
+      {
         title: '图片列表',
         url: '/docs/image-list',
-        icon: <Settings />,
+        icon: <ImageIcon />,
       },
       {
         title: '头像上传',
         url: '/docs/avatar-upload',
-        icon: <Inbox />,
+        icon: <User />,
       },
       {
-        title: '配合Shadcn/ui',
-        url: '/docs/with-shadcn',
-        icon: <Inbox />,
+        title: '第三方上传组件',
+        url: '/docs/third-component',
+        icon: <Upload />,
+      },
+    ],
+  },
+  {
+    label: 'Articles',
+    icon: <ComponentIcon />,
+    items: [
+      {
+        title: '如何完成文件上传',
+        url: '/docs/how-upload',
+        icon: <ImageIcon />,
       },
     ],
   },
