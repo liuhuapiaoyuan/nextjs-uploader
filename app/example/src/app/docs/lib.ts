@@ -28,7 +28,7 @@ export function buildFileUploadService(
     return uploadFile({
       file,
       onProgress,
-      s3Url: url,
+      url: url,
       formData,
       method: 'POST',
       onSuccess() {

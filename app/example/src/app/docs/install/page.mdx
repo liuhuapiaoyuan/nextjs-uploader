@@ -1,18 +1,21 @@
+import { Upload } from '@/components/upload/upload'
+import { getSignedUrl } from '../../action'
+
 # 文档测试
 
-## 安装
+### 安装
 
-```bash
+```
 npm install nextjs-uploader
 ```
 
 或者
 
-```bash
+```
 yarn add nextjs-uploader
 ```
 
-## 使用
+### 使用
 
 ```javascript
 import { Uploader } from 'nextjs-uploader'
@@ -32,3 +35,5 @@ function MyComponent() {
   )
 }
 ```
+
+<Upload getSignedParams={getSignedUrl} />

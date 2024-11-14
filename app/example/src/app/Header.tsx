@@ -1,5 +1,3 @@
-'use client'
-
 export interface HeaderProps {
   brand: {
     href: string

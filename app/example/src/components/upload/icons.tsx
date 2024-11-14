@@ -30,11 +30,11 @@ export const FileIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     {...props}
     xmlns='http://www.w3.org/2000/svg'
-    shape-rendering='geometricPrecision'
-    text-rendering='geometricPrecision'
-    image-rendering='optimizeQuality'
+    shapeRendering='geometricPrecision'
+    textRendering='geometricPrecision'
+    imageRendering='optimizeQuality'
     fillRule='evenodd'
-    clip-rule='evenodd'
+    clipRule='evenodd'
     viewBox='0 0 441 512.398'
   >
     <path
