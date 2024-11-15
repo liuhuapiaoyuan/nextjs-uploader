@@ -37,8 +37,8 @@ importers:
         specifier: ^15.0.3
         version: 15.0.3(@mdx-js/loader@3.1.0(acorn@8.14.0))(@mdx-js/react@3.1.0(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106))
       '@nextjs-uploader/s3':
-        specifier: workspace:*
-        version: link:../../packages/s3
+        specifier: '*'
+        version: 0.0.12(typescript@5.6.3)
       '@radix-ui/react-dialog':
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
@@ -909,6 +909,11 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
+
+  '@nextjs-uploader/s3@0.0.12':
+    resolution: {integrity: sha512-7B11tLBXRbj1JCOIYpPuqK8Piv8FGVKKXxy0D89f7525W8I3KySZ+2ASqvt8jPbOPxzH2yaFgT3cwwoeyuR9Dg==}
+    peerDependencies:
+      typescript: ^5.0.0
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -4683,6 +4688,14 @@ snapshots:
 
   '@next/swc-win32-x64-msvc@15.0.3':
     optional: true
+
+  '@nextjs-uploader/s3@0.0.12(typescript@5.6.3)':
+    dependencies:
+      '@aws-sdk/client-s3': 3.691.0
+      '@aws-sdk/s3-request-presigner': 3.691.0
+      typescript: 5.6.3
+    transitivePeerDependencies:
+      - aws-crt
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:

@@ -1,6 +1,6 @@
 {
     "name": "@nextjs-uploader/s3",
-    "version": "0.0.11",
+    "version": "0.0.13",
     "description": "NextJS Uploader S3 Adapter",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -17,7 +17,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/nextjs-uploader/nextjs-uploader.git"
+        "url": "git+https://github.com/liuhuapiaoyuan/nextjs-uploader"
     },
     "keywords": [
         "nextjs",
@@ -27,9 +27,9 @@
     "author": "NextJS Uploader Team",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/nextjs-uploader/nextjs-uploader/issues"
+        "url": "https://github.com/liuhuapiaoyuan/nextjs-uploader/issues"
     },
-    "homepage": "https://github.com/nextjs-uploader/nextjs-uploader#readme",
+    "homepage": "https://github.com/liuhuapiaoyuan/nextjs-uploaderr#readme",
     "peerDependencies": {
         "typescript": "^5.0.0"
     },
