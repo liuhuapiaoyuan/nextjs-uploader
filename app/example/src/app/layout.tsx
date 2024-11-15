@@ -5,8 +5,9 @@ import { Header } from './Header'
 import { CloudUpload } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'How To Update in Nextjs',
-  description: 'Learn how to update your Nextjs app in this step-by-step guide',
+  title: 'How To Upload File in Nextjs',
+  description: 'This is a tutorial on how to upload file in Nextjs',
+  keywords: 'nextjs, upload, file, nextjs-uploader',
 }
 
 export default function RootLayout({
