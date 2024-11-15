@@ -47,15 +47,4 @@ export const MenuGroups: MenuGroupType[] = [
       },
     ],
   },
-  {
-    label: 'Articles',
-    icon: <ComponentIcon />,
-    items: [
-      {
-        title: '如何完成文件上传',
-        url: '/docs/how-upload',
-        icon: <ImageIcon />,
-      },
-    ],
-  },
 ]
