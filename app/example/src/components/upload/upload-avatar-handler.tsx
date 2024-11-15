@@ -1,13 +1,6 @@
 import { HTMLAttributes } from 'react'
-import {
-  CloseIcon,
-  FileIcon,
-  LoadingIcon,
-  UploadIcon,
-  UploadImageIcon,
-} from './icons'
+import { CloseIcon, LoadingIcon, UploadImageIcon } from './icons'
 import { UploadFileStatus, useUploadContext } from './upload-context'
-import { UploadImageButton } from './upload-file-handers'
 import { useFileHandler } from './useFileHandler'
 import { cn } from '@/lib/utils'
 

@@ -13,7 +13,7 @@ export interface UploadFileCardProps {
   /**
    * 图标
    */
-  icon?: any
+  icon?: string
   /**
    * 文件大小
    */
@@ -46,9 +46,11 @@ export function UploadFileCard({
         <div
           className='w-full h-full bg-contain rounded-xl'
           style={
-            icon && {
-              backgroundImage: `url(${icon})`,
-            }
+            icon
+              ? {
+                  backgroundImage: `url(${icon})`,
+                }
+              : {}
           }
         ></div>
         <div className='absolute z-20 right-0 top-0 p-2'>
